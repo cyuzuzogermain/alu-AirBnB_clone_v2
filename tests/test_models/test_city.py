@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ """
 from tests.test_models.test_base_model import test_basemodel
-from models.city import City
+from models.city import Review
 
 
 class test_City(test_basemodel):
@@ -11,7 +11,7 @@ class test_City(test_basemodel):
         """ """
         super().__init__(*args, **kwargs)
         self.name = "City"
-        self.value = City
+        self.value = Review
 
     def test_state_id(self):
         """ """
