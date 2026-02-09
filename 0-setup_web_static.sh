@@ -1,61 +1,39 @@
 #!/usr/bin/env bash
-# This script sets up a web servers for the deployment of web_static hbnb
+# Sets up web servers for the deployment of web_static
 
-# installing nginx
-dpkg -l | grep nginx > /dev/null
-if [ $? -eq 1 ]; then
-    sudo apt update
-    sudo apt install nginx -y
-fi
+# 1. Install Nginx if not already installed
+sudo apt-get update -y
+sudo apt-get install -y nginx
 
-# create data directory
-if [ ! -d "/data/" ]; then
-    sudo mkdir /data/
-fi
+# 2. Create directory structure
+sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
 
-# create web_static directory
-if [ ! -d "/data/web_static/" ]; then
-    sudo mkdir -p /data/web_static/
-fi
+# 3. Create a fake HTML file to test the configuration
+echo "<html>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
+</html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
-# create releases and test directory
-if [ ! -d "/data/web_static/releases/test/" ]; then
-    sudo mkdir -p /data/web_static/releases/test/
-fi
+# 4. Create/Recreate symbolic link
+# -s: symbolic, -f: force (removes existing destination files)
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
-# create shared directory
-if [ ! -d "/data/web_static/shared/" ]; then
-    sudo mkdir -p /data/web_static/shared/
-fi
-
-# create index.html in test directory
-if [ ! -f "/data/web_static/releases/test/index.html" ]; then
-    sudo touch /data/web_static/releases/test/index.html
-fi
-
-# add some content to the index.html
-if [ -f "/data/web_static/releases/test/index.html" ]; then
-    echo "Welcome to our today's web static" | sudo tee /data/web_static/releases/test/index.html > /dev/null
-fi
-
-# creating a symlink
-if [ -e "/data/web_static/current" ]; then
-    sudo rm /data/web_static/current
-    sudo ln -s /data/web_static/releases/test/ /data/web_static/current
-else
-    sudo ln -s /data/web_static/releases/test/ /data/web_static/current
-fi
-
-# change file/ directory ownership
+# 5. Give ownership to ubuntu user and group recursively
 sudo chown -R ubuntu:ubuntu /data/
 
-# Define the configuration block
-CONF_BLOCK="location /hbnb_static/ {\n\talias /data/web_static/current/;\n}"
+# 6. Update Nginx configuration
+# We use 'printf' to handle the multiline block and 'sed' to inject it
+# The check prevents adding the block multiple times if the script is rerun
+NGINX_CONF="/etc/nginx/sites-available/default"
+STATIC_BLOCK="location /hbnb_static {\n\talias /data/web_static/current/;\n}"
 
-# Check if the configuration already exists to avoid duplicates
-if ! grep -q "location /hbnb_static/" /etc/nginx/sites-available/default; then
-    sudo sed -i "/server_name _;/a \\\n\t$CONF_BLOCK" /etc/nginx/sites-available/default
+if ! grep -q "location /hbnb_static" "$NGINX_CONF"; then
+    sudo sed -i "/server_name _;/a \\\n\t$STATIC_BLOCK" "$NGINX_CONF"
 fi
 
-# Test the config before restarting (Best Practice!)
+# 7. Test configuration and restart Nginx
 sudo nginx -t && sudo service nginx restart
