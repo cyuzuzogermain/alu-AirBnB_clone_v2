@@ -8,7 +8,7 @@ if [ $? -eq 1 ]; then
     sudo apt install nginx -y
 fi
 
-# creat data directory
+# create data directory
 if [ ! -d "/data/" ]; then
     sudo mkdir /data/
 fi
@@ -50,7 +50,7 @@ fi
 sudo chown -R ubuntu:ubuntu /data/
 
 # update nginx to serve the content of /data/
-sudo sed -i "/server_name/a\        location /hbnb_static {\n                alias /data/web_static/current/;\n        }" /etc/nginx/sites-available/default
+sudo sed -i "/server_name/a\ location /hbnb_static {\n alias /data/web_static/current/;\n}" /etc/nginx/sites-available/default
 
 #updating nginx
 sudo service nginx restart
