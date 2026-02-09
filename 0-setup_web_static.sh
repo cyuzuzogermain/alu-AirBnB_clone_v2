@@ -49,8 +49,13 @@ fi
 # change file/ directory ownership
 sudo chown -R ubuntu:ubuntu /data/
 
-# update nginx to serve the content of /data/
-sudo sed -i "/server_name/a\ location /hbnb_static {\n alias /data/web_static/current/;\n}" /etc/nginx/sites-available/default
+# Define the configuration block
+CONF_BLOCK="location /hbnb_static/ {\n\talias /data/web_static/current/;\n}"
 
-#updating nginx
-sudo service nginx restart
+# Check if the configuration already exists to avoid duplicates
+if ! grep -q "location /hbnb_static/" /etc/nginx/sites-available/default; then
+    sudo sed -i "/server_name _;/a \\\n\t$CONF_BLOCK" /etc/nginx/sites-available/default
+fi
+
+# Test the config before restarting (Best Practice!)
+sudo nginx -t && sudo service nginx restart
