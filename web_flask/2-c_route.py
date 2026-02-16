@@ -37,13 +37,13 @@ def hbnb():
 
 @app.route('/c/<text>')
 def c_route(text):
-   """
-   Handles requests to c URL
+    """
+    Handles requests to c URL
 
-   Returns:
-       str: C followed by the string in text var.
-   """
-   return f"C {text}"
+    Returns:
+        str: C followed by the string in text var.
+    """
+    return f"C {text}"
 
 
 if __name__ == "__main__":
