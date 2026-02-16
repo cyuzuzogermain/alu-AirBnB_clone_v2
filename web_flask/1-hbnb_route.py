@@ -30,7 +30,7 @@ def hbnb():
     Handles requests to the hbnb URL
 
     Returns:
-	str: A simple 'HBNB' message.
+        str: A simple 'HBNB' message.
     """
     return 'HBNB'
 
