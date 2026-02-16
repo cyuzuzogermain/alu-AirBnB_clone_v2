@@ -13,14 +13,40 @@ from flask import Flask
 app = Flask(__name__)
 
 
+@app.route('/', strict_slashes=False)
+def hello_route():
+    """
+    Handles requests to the root URL (/).
+
+    Returns:
+        str: A simple 'Hello HBNB!' greeting message.
+    """
+    return 'Hello HBNB!'
+
+
+@app.route('/hbnb', strict_slashes=False)
+def hbnb():
+    """
+    Handles requests to the hbnb URL
+
+    Returns:
+        str: A simple 'HBNB' message.
+    """
+    return 'HBNB'
+
 @app.route('/c/<text>', strict_slashes=False)
 def c_route(text):
     """
-    Handles requests to c URL
+    Displays 'C ' followed by the value of the text variable.
+
+    Args:
+        text (str): The variable part of the URL. Underscores are
+                   automatically replaced with spaces for readability.
 
     Returns:
-        str: C followed by the string in text var.
+        str: The formatted string 'C <text>'.
     """
+    formatted_text=text.replace('_', ' ')
     return f"C {text}"
 
 
