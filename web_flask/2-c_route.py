@@ -53,6 +53,9 @@ def c_route(text):
     """
     formatted_text = text.replace('_', ' ')
     return f"C {formatted_text}"
+    """
+    Returns an f string
+    """
 
 
 
