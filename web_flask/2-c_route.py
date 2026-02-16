@@ -42,6 +42,9 @@ def c_route(text):
 
     formatted_text = text.replace('_', ' ')
     return f"C {formatted_text}"
+    """
+    returns an f string
+    """
 
 
 if __name__ == "__main__":
