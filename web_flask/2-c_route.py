@@ -37,14 +37,23 @@ def hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def c_route(text):
     """
-    Displays 'C ' followed by the value of the text variable.
-    """
+    Displays a string starting with 'C ' followed by the value of the text
+    parameter provided in the URL.
 
+    The route automatically replaces underscores (_) in the text with spaces
+    to improve readability when displaying the result.
+
+    Args:
+        text (str): The dynamic URL parameter representing a word or phrase.
+                    Any underscores in this value are converted to spaces.
+
+    Returns:
+        str: A formatted string in the form 'C <text>' where <text> is the
+             processed version of the URL parameter.
+    """
     formatted_text = text.replace('_', ' ')
     return f"C {formatted_text}"
-    """
-    returns an f string
-    """
+
 
 
 if __name__ == "__main__":
