@@ -38,15 +38,8 @@ def hbnb():
 def c_route(text):
     """
     Displays 'C ' followed by the value of the text variable.
-
-    Args:
-        text (str): The variable part of the URL. Underscores are
-                   automatically replaced with spaces for readability.
-
-    Returns:
-        str: The formatted string 'C <text>'.
     """
-    # Replacing underscores with spaces is standard for these web routes
+
     formatted_text = text.replace('_', ' ')
     return f"C {formatted_text}"
 
