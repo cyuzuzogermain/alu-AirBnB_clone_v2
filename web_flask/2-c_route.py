@@ -46,8 +46,9 @@ def c_route(text):
     Returns:
         str: The formatted string 'C <text>'.
     """
-    formatted_text=text.replace('_', ' ')
-    return f"C {text}"
+    # Replacing underscores with spaces is standard for these web routes
+    formatted_text = text.replace('_', ' ')
+    return f"C {formatted_text}"
 
 
 if __name__ == "__main__":
