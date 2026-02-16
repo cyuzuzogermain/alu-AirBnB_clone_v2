@@ -26,13 +26,13 @@ def hello_route():
 
 @app.route('/hbnb')
 def hbnb():
-   """
-   Handles requests to the hbnb URL
+    """
+    Handles requests to the hbnb URL
 
-   Returns:
+    Returns:
 	str: A simple 'HBNB' message.
-   """
-   return 'HBNB'
+    """
+    return 'HBNB'
 
 if __name__ == "__main__":
     """
