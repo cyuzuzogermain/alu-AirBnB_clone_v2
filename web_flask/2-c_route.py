@@ -13,29 +13,7 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def hello_route():
-    """
-    Handles requests to the root URL (/).
-
-    Returns:
-        str: A simple 'Hello HBNB!' greeting message.
-    """
-    return 'Hello HBNB!'
-
-
-@app.route('/hbnb')
-def hbnb():
-    """
-    Handles requests to the hbnb URL
-
-    Returns:
-        str: A simple 'HBNB' message.
-    """
-    return 'HBNB'
-
-
-@app.route('/c/<text>')
+@app.route('/c/<text>', strict_slashes=False)
 def c_route(text):
     """
     Handles requests to c URL
