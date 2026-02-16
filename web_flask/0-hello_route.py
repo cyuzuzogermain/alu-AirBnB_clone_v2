@@ -12,6 +12,7 @@ from flask import Flask
 # __name__ helps Flask determine the root path for resources
 app = Flask(__name__)
 
+
 @app.route('/', strict_slashes=False)
 def hello_route():
     """
